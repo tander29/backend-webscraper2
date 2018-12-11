@@ -41,6 +41,8 @@ def url_scrape(website, soup_scrape):
             unique_handling.append(url)
     print
     print("Soup Data: Other URL's and Relative Url's based on domain or links")
+    """ In addition to html parser scrape 
+    uses bsoup to scrape for relative urls"""
     for url in soup_scrape:
         if url not in unique_handling:
             print(url)
@@ -102,7 +104,8 @@ class MyParser(HTMLParser):
 
 
 def chunky_chicken_noodle(data):
-    # print(data)
+    """ Instructions want all data from img and a tags
+    states relative links to ones with own domain"""
     soup_data = []
     soup = bs.BeautifulSoup(data, 'html.parser')
     for link in soup.find_all('a'):
@@ -117,7 +120,8 @@ def chunky_chicken_noodle(data):
 
 
 def web_request(website):
-    """This is a handler """
+    """ Added the soup scrape to better scrape data,
+    even though HTML parser does it, bsoup does it better """
     r = requests.get(website)
     soup_scrape = chunky_chicken_noodle(r.text)
     parser = MyParser()
@@ -150,12 +154,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# get urls only from a, href, and image tags -
-# get phone numbers only from in between tags, not from attributes
-# ignore all script sources because instructions unclear
-#  usehtml parser ignore beautiful soup for now
-# comments tell WHY and a lil of what
-# helper and utility at top of page, big pic items at bottom
-# - read from top to bottom in process order
